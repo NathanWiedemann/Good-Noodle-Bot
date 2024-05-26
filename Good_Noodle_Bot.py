@@ -1,19 +1,26 @@
 import discord
+from discord.ext import commands
 import os
 
 from dotenv import load_dotenv
 load_dotenv()
 
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print(f'Logged on as {self.user}!')
-
-    async def on_message(self, message):
-        print(f'Message from {message.author}: {message.content}')
+description = 'Good Noodle Star bot.'
 
 intents = discord.Intents.default()
+intents.members = True
 intents.message_content = True
 
-client = MyClient(intents=intents)
+bot = commands.Bot(command_prefix='/', description=description, intents=intents)
 
-client.run(os.getenv("DISCORD_TOKEN"))
+@bot.event()
+async def on_ready():
+    print('Log in.')
+    print(f'User: {bot.user}')
+    print(f'ID: {bot.user.id}')
+
+@bot.command()
+async def test(ctx, arg):
+    await ctx.send(arg)
+
+bot.run(os.getenv("DISCORD_TOKEN"))
