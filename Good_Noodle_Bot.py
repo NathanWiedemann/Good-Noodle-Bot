@@ -13,14 +13,15 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='/', description=description, intents=intents)
 
-@bot.event()
+@bot.event
 async def on_ready():
     print('Log in.')
     print(f'User: {bot.user}')
     print(f'ID: {bot.user.id}')
 
 @bot.command()
-async def test(ctx, arg):
-    await ctx.send(arg)
+async def star(ctx, arg):
+    
+    await ctx.send(f'{ctx.message.author.mention} Star Awarded!')
 
 bot.run(os.getenv("DISCORD_TOKEN"))
